@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #02030a;
+    color: white;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Animated background */
+.background {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(255,170,0,.12), transparent 30%),
+        radial-gradient(circle at 20% 20%, rgba(0,150,255,.10), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255,0,100,.08), transparent 30%),
+        #02030a;
+}
+
+/* Stars / particles */
+.background::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,190,0,.5) 1px, transparent 1px);
+    background-size: 90px 90px, 140px 140px;
+    animation: stars 25s linear infinite;
+    opacity: .35;
+}
+
+@keyframes stars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-140px); }
+}
+
+/* Sun */
+.sun {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background:
+        radial-gradient(circle,
+        #fff7a0 0%,
+        #ffd000 22%,
+        #ff8c00 45%,
+        rgba(255,80,0,.25) 65%,
+        transparent 72%);
+    box-shadow:
+        0 0 40px #ffb300,
+        0 0 100px rgba(255,140,0,.7),
+        0 0 200px rgba(255,80,0,.3);
+    animation: sunPulse 4s ease-in-out infinite;
+    opacity: .55;
+}
+
+.sun::before,
+.sun::after {
+    content: "";
+    position: absolute;
+    inset: -70px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,180,0,.22);
+    animation: rotate 18s linear infinite;
+}
+
+.sun::after {
+    inset: -105px;
+    border-color: rgba(255,100,0,.12);
+    animation-duration: 28s;
+    animation-direction: reverse;
+}
+
+@keyframes sunPulse {
+    0%,100% {
+        transform: translate(-50%, -50%) scale(.95);
+        filter: brightness(.9);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.08);
+        filter: brightness(1.25);
+    }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Main glass card */
+.card {
+    position: relative;
+    z-index: 5;
+    width: min(90%, 650px);
+    padding: 55px 45px;
+    text-align: center;
+
+    background: rgba(5, 8, 18, .68);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 100px rgba(0,0,0,.65),
+        inset 0 0 40px rgba(255,170,0,.04);
+
+    animation: cardIn 1.2s ease-out;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Small top label */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 9px 17px;
+    border-radius: 50px;
+
+    background: rgba(255,170,0,.08);
+    border: 1px solid rgba(255,170,0,.25);
+
+    color: #ffc400;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    margin-bottom: 28px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffc400;
+    box-shadow: 0 0 15px #ffc400;
+    animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: .25; }
+}
+
+/* Heading */
+h1 {
+    font-size: clamp(42px, 8vw, 78px);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #ffd45a,
+        #ff9d00,
+        #ffffff
+    );
+
+    background-size: 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    animation: gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0%; }
+    100% { background-position: 300%; }
+}
+
+.subtitle {
+    margin-top: 20px;
+    color: rgba(255,255,255,.65);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Progress section */
+.progress-area {
+    margin-top: 40px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    color: rgba(255,255,255,.55);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.progress-bar {
+    height: 8px;
+    width: 100%;
+
+    background: rgba(255,255,255,.08);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 72%;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        90deg,
+        #ff8c00,
+        #ffd000,
+        #ffffff
+    );
+
+    box-shadow:
+        0 0 12px rgba(255,180,0,.8),
+        0 0 30px rgba(255,140,0,.4);
+
+    position: relative;
+    animation: progressGlow 2s ease-in-out infinite;
+}
+
+.progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.9),
+        transparent
+    );
+    animation: shine 1.8s infinite;
+}
+
+@keyframes shine {
+    from { transform: translateX(-120px); }
+    to { transform: translateX(120px); }
+}
+
+@keyframes progressGlow {
+    50% {
+        box-shadow:
+            0 0 20px rgba(255,180,0,1),
+            0 0 45px rgba(255,140,0,.5);
+    }
+}
+
+/* Telegram */
+.contact {
+    margin-top: 38px;
+}
+
+.contact-text {
+    color: rgba(255,255,255,.45);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.telegram {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 13px 22px;
+
+    border-radius: 50px;
+
+    text-decoration: none;
+    color: white;
+
+    background: rgba(20,140,255,.12);
+    border: 1px solid rgba(40,160,255,.35);
+
+    transition: .3s ease;
+
+    font-weight: 600;
+}
+
+.telegram:hover {
+    transform: translateY(-3px);
+    background: rgba(20,140,255,.25);
+    box-shadow: 0 0 30px rgba(30,150,255,.3);
+}
+
+.telegram-icon {
+    font-size: 20px;
+}
+
+/* Bottom text */
+.footer {
+    margin-top: 32px;
+    color: rgba(255,255,255,.25);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .card {
+        padding: 40px 25px;
+        border-radius: 22px;
+    }
+
+    .sun {
+        width: 260px;
+        height: 260px;
+    }
+
+    h1 {
+        letter-spacing: -2px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="sun"></div>
+
+<main class="card">
+
+    <div class="status">
+        <span class="status-dot"></span>
+        In Progress
+    </div>
+
+    <h1>COMING SOON</h1>
+
+    <p class="subtitle">
+        We are coming soon in a short time.<br>
+        Something exciting is being prepared.
+    </p>
+
+    <div class="progress-area">
+
+        <div class="progress-header">
+            <span>BUILDING EXPERIENCE</span>
+            <span>72%</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+    </div>
+
+    <div class="contact">
+
+        <div class="contact-text">
+            For updates & contact
+        </div>
+
+        <a
+            class="telegram"
+            href="https://t.me/putinbhai"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <span class="telegram-icon">✈</span>
+            Contact Mukesh Kathi · @putinbhai
+        </a>
+
+    </div>
+
+    <div class="footer">
+        STAY TUNED • MORE IS COMING
+    </div>
+
+</main>
+
+</body>
+</html>
